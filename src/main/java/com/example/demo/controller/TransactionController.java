@@ -7,11 +7,11 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import com.google.zxing.*;
 import com.google.zxing.client.j2se.BufferedImageLuminanceSource;
 import com.google.zxing.common.HybridBinarizer;
+import jakarta.xml.bind.DatatypeConverter;
 import lombok.RequiredArgsConstructor;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import org.springframework.web.multipart.MultipartFile;
 
 import javax.imageio.ImageIO;
 import java.awt.image.BufferedImage;
@@ -29,8 +29,8 @@ public class TransactionController {
     private final PaymentServiceImpl paymentServiceImpl;
 
     @PostMapping("/initialize-transaction")
-    public ResponseEntity<Object> initializeTransaction(@RequestParam("qrCodeImage") MultipartFile qrCodeImage) {
-        Map<String, String> qrCodeInfo = extractInfoFromQRCode(qrCodeImage);
+    public ResponseEntity<Object> initializeTransaction(@RequestParam("qrCodeImage") String base64QRCode) {
+        Map<String, String> qrCodeInfo = extractInfoFromQRCode(base64QRCode);
 
         if (qrCodeInfo == null || qrCodeInfo.isEmpty()) {
             return new ResponseEntity<>("Failed to extract information from QR code", HttpStatus.BAD_REQUEST);
@@ -44,9 +44,11 @@ public class TransactionController {
         return paymentService.initializeTransaction(transactionDTO);
     }
 
-    private Map<String, String> extractInfoFromQRCode(MultipartFile qrCodeImage) {
+    private Map<String, String> extractInfoFromQRCode(String base64QRCode) {
         try {
-            BufferedImage bufferedImage = ImageIO.read(new ByteArrayInputStream(qrCodeImage.getBytes()));
+            byte[] decodedBytes = DatatypeConverter.parseBase64Binary(base64QRCode);
+            ByteArrayInputStream byteArrayInputStream = new ByteArrayInputStream(decodedBytes);
+            BufferedImage bufferedImage = ImageIO.read(byteArrayInputStream);
 
             Map<DecodeHintType, Object> hints = new HashMap<>();
             hints.put(DecodeHintType.TRY_HARDER, Boolean.TRUE);
@@ -55,9 +57,7 @@ public class TransactionController {
             BinaryBitmap binaryBitmap = new BinaryBitmap(new HybridBinarizer(new BufferedImageLuminanceSource(bufferedImage)));
             Result result = new MultiFormatReader().decode(binaryBitmap, hints);
 
-
             String qrCodeData = result.getText();
-
 
             ObjectMapper objectMapper = new ObjectMapper();
             return objectMapper.readValue(qrCodeData, Map.class);
@@ -66,10 +66,9 @@ public class TransactionController {
             return null;
         }
     }
- @GetMapping("/verify-transaction")
-  public ResponseEntity<Object> verifyTransaction(@RequestParam  String trxref){
-     return paymentService.verifyTransaction(trxref);
- }
 
-
+    @GetMapping("/verify-transaction")
+    public ResponseEntity<Object> verifyTransaction(@RequestParam String trxref) {
+        return paymentService.verifyTransaction(trxref);
+    }
 }
