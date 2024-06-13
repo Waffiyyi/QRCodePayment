@@ -22,6 +22,13 @@ public class Transaction {
     private String reference;
     private Date createdAt;
     private Date updatedAt;
+    @ManyToOne
+    @JoinColumn(name = "qr_code_id")
+    private QrCode qrCode;
+
+    @ManyToOne
+    @JoinColumn(name = "sub_qr_code_id")
+    private SubQRCode subQRCode;
 
     @ManyToOne
     private User user;

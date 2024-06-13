@@ -19,5 +19,14 @@ public class QrCode {
     private LocalDateTime expirationDate;
     @OneToOne(mappedBy = "baseQRCode")
     private Product product;
+    @ManyToOne
+    @JoinColumn(name = "user_id")
+    private User user;
+
+    @OneToMany(mappedBy = "baseQRCode")
+    private List<SubQRCode> subQRCodes;
+
+    @OneToMany(mappedBy = "qrCode")
+    private List<Transaction> transactions;
 
 }

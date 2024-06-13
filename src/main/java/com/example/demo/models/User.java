@@ -16,7 +16,11 @@ public class User {
 
     private String email;
 
-    // Add any other relevant fields and annotations here
+
+    @OneToMany(mappedBy = "user")
+    private List<QrCode> qrCodes;
+
+
 
 //    @OneToMany(mappedBy = "userData")
 //    private List<ProductPayment> productPayments;
