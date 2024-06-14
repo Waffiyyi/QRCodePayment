@@ -24,7 +24,7 @@ public class Transaction {
     private Date updatedAt;
     @ManyToOne
     @JoinColumn(name = "qr_code_id")
-    private QrCode qrCode;
+    private QRCode qrCode;
 
     @ManyToOne
     @JoinColumn(name = "sub_qr_code_id")

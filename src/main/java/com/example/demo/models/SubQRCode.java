@@ -19,13 +19,14 @@ public class SubQRCode {
     private Long id;
 
     private String code;
+    private byte[] qrCodeImage;
     private LocalDateTime expirationDate;
     private boolean enabled;
     private boolean expired;
 
     @ManyToOne
     @JoinColumn(name = "base_qr_code_id")
-    private QrCode baseQRCode;
+    private QRCode baseQRCode;
 
     @OneToMany(mappedBy = "subQRCode")
     private List<Transaction> transactions;

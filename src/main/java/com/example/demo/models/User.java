@@ -1,13 +1,18 @@
 package com.example.demo.models;
 
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
 import lombok.Data;
+import lombok.NoArgsConstructor;
+import lombok.RequiredArgsConstructor;
 
 import java.util.List;
 
 @Data
 @Entity
 @Table(name = "users")
+@NoArgsConstructor
+@AllArgsConstructor
 public class User {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -18,10 +23,7 @@ public class User {
 
 
     @OneToMany(mappedBy = "user")
-    private List<QrCode> qrCodes;
+    private List<QRCode> qrCodes;
 
 
-
-//    @OneToMany(mappedBy = "userData")
-//    private List<ProductPayment> productPayments;
 }
