@@ -1,6 +1,6 @@
 FROM openjdk:17
 LABEL maintainer = "payizzy"
 WORKDIR /app
-COPY demo-0.0.1-SNAPSHOT.jar /app/demo-0.0.1-SNAPSHOT.jar
+COPY qrcode-k8s.jar /app/qrcode-k8s.jar
 EXPOSE 8090
-ENTRYPOINT ["java", "-jar", "demo-0.0.1-SNAPSHOT.jar", "--spring.profiles.active=prod"]
+ENTRYPOINT ["java", "-jar", "qrcode-k8s.jar"]

@@ -16,39 +16,9 @@ import java.time.LocalDateTime;
 @RequestMapping("/api/qrcode")
 @RequiredArgsConstructor
     public class QRCodeController {
-
-
-//    private final ProductService productService;
-//    private final ProductRepository productRepository;
-//
-//
-//    @GetMapping("/generate-sub-qr/{productId}")
-//    public ResponseEntity<byte[]> generateSubQRCode(@PathVariable long productId) throws IOException {
-//        Product product = productRepository.findById(productId).orElseThrow(() -> new RuntimeException("Product not found"));
-//        ProductPayment productPayment = product.getProductPayment();
-//        byte[] subQRCode = productService.generateSubQRCode(productPayment, 200, 200);
-//        return ResponseEntity.ok().contentType(MediaType.IMAGE_PNG).body(subQRCode);
-//    }
-//
-//    @PostMapping("/qr-code/{qrCodeId}/enable")
-//    public ResponseEntity<String> enableQrCode(@PathVariable long qrCodeId) {
-//        productService.enableQrCode(qrCodeId);
-//        return ResponseEntity.ok("QR Code enabled successfully");
-//    }
-//
-//    @PostMapping("/qr-code/{qrCodeId}/disable")
-//    public ResponseEntity<String> disableQrCode(@PathVariable long qrCodeId) {
-//        productService.disableQrCode(qrCodeId);
-//        return ResponseEntity.ok("QR Code disabled successfully");
-//    }
-//
-//    @PostMapping("/qr-code/{qrCodeId}/expiration")
-//    public ResponseEntity<String> setExpirationDate(@PathVariable long qrCodeId, @RequestBody ExpirationDto expirationDate) {
-//        productService.setExpirationDate(qrCodeId, expirationDate);
-//        return ResponseEntity.ok("Expiration date set successfully");
-//    }
      private final QRCodeService qrCodeService;
      private final PaymentService paymentService;
+
 
     @PostMapping("/generate")
     public ResponseEntity<?> generateBaseQRCode(@RequestParam String qrCodeData) throws IOException {

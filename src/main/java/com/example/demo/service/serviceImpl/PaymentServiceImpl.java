@@ -29,12 +29,12 @@ import java.util.UUID;
 @Slf4j
 public class PaymentServiceImpl implements PaymentService {
 
-    @Value("${PAYSTACK_API_KEY}")
-    private String API_KEY;
-    @Value("${BASE_URL}")
-    private String BASE_URL;
-    @Value("${CALLBACK_URL}")
-    private String CALLBACK_URL;
+//    @Value("${PAYSTACK_API_KEY}")
+//    private String API_KEY;
+//    @Value("${BASE_URL}")
+//    private String BASE_URL;
+//    @Value("${CALLBACK_URL}")
+//    private String CALLBACK_URL;
 
     private final WebClient webClient = WebClient.builder()
             .baseUrl("https://api.paystack.co")
@@ -102,6 +102,9 @@ public class PaymentServiceImpl implements PaymentService {
 @Override
     public ResponseEntity<Object> scanAndPayWithQRCode(String qrCodeData, Double amount, String transactionPin) {
         QRCode qrCode = qrCodeRepository.findByQrCodeData(qrCodeData).orElseThrow(() -> new IllegalArgumentException("QR Code not found"));
+        if(!qrCode.isEnabled()){
+            throw new IllegalArgumentException("QRCode disabled");
+        }
         //Extract necessary info from qrcode
 
         // Here, validate the transaction pin
@@ -116,6 +119,9 @@ public class PaymentServiceImpl implements PaymentService {
 @Override
     public ResponseEntity<Object> generateSubQRCodePayment(Long subQRCodeId, Double amount, String transactionPin ) {
         SubQRCode subQRCode = subQRCodeRepository.findById(subQRCodeId).orElseThrow(() -> new IllegalArgumentException("Sub QR Code not found"));
+    if(!subQRCode.isEnabled()){
+        throw new IllegalArgumentException("QRCode disabled");
+    }
         //Extract necessary info from qrcode
 
 

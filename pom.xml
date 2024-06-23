@@ -84,9 +84,13 @@
 							<artifactId>lombok</artifactId>
 						</exclude>
 					</excludes>
+
 				</configuration>
 			</plugin>
 		</plugins>
+
+			<finalName>qrcode-k8s</finalName>
+
 	</build>
 
 </project>
