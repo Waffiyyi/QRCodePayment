@@ -37,8 +37,8 @@ public class PaymentServiceImpl implements PaymentService {
     private String callBackUrl;
 
     private final WebClient webClient = WebClient.builder()
-            .baseUrl(baseUrl)
-            .defaultHeader(HttpHeaders.AUTHORIZATION, apiKey)
+            .baseUrl("https://api.paystack.co")
+            .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer sk_test_e6e5c33035a78bc0c1c743c9d26588b346fc085b")
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build();
 

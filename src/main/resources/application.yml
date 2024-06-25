@@ -21,8 +21,8 @@ paystack:
 #  payment:
 #    channels: card, bank, ussd, qr, mobile_money, bank_transfer, eft
   base:
-    url: https://api.paystack.co
+    url: "https://api.paystack.co"
   callback:
-    url: https://5d6e-105-112-176-203.ngrok-free.app/verify-transaction
+    url: "https://5d6e-105-112-176-203.ngrok-free.app/verify-transaction"
 
 
