@@ -29,16 +29,16 @@ import java.util.UUID;
 @Slf4j
 public class PaymentServiceImpl implements PaymentService {
 
-//    @Value("${PAYSTACK_API_KEY}")
-//    private String API_KEY;
-//    @Value("${BASE_URL}")
-//    private String BASE_URL;
-//    @Value("${CALLBACK_URL}")
-//    private String CALLBACK_URL;
+    @Value("${paystack.secret.key}")
+    private String apiKey;
+    @Value("${paystack.base.url}")
+    private String baseUrl;
+    @Value("${paystack.callback.url}")
+    private String callBackUrl;
 
     private final WebClient webClient = WebClient.builder()
-            .baseUrl("https://api.paystack.co")
-            .defaultHeader(HttpHeaders.AUTHORIZATION, "Bearer sk_test_e6e5c33035a78bc0c1c743c9d26588b346fc085b")
+            .baseUrl(baseUrl)
+            .defaultHeader(HttpHeaders.AUTHORIZATION, apiKey)
             .defaultHeader(HttpHeaders.CONTENT_TYPE, MediaType.APPLICATION_JSON_VALUE)
             .build();
 

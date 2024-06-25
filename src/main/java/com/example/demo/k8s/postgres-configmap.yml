@@ -3,5 +3,5 @@ kind: ConfigMap
 metadata:
   name: postgres-conf
 data:
-  host: postgres
-  name: qrcodeDB
+  host: "postgres"
+  name: "qrcodeDB"

@@ -13,3 +13,16 @@ spring:
 
 server:
   port: 8080
+
+
+paystack:
+  secret:
+    key: Bearer sk_test_f02aa8e41cbc04439974e97960dcc33f7b9f476d
+#  payment:
+#    channels: card, bank, ussd, qr, mobile_money, bank_transfer, eft
+  base:
+    url: https://api.paystack.co
+  callback:
+    url: https://5d6e-105-112-176-203.ngrok-free.app/verify-transaction
+
+
