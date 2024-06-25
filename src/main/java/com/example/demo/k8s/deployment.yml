@@ -1,0 +1,61 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: qrcode-k8s-svc
+  labels:
+    app: qrcode-k8s
+spec:
+  type: NodePort
+  selector:
+    app: qrcode-k8s
+  ports:
+    - name: http
+      port: 80
+      nodePort: 30031
+      targetPort: 8090
+      protocol: TCP
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: qrcode-k8s-deploy
+spec:
+  replicas: 3
+  selector:
+    matchLabels:
+      app: qrcode-k8s
+  template:
+    metadata:
+      labels:
+        app: qrcode-k8s
+    spec:
+      containers:
+        - name: qrcode-k8s
+          image: echo444/qr-code:v1
+          imagePullPolicy: IfNotPresent
+          ports:
+            - containerPort: 8090
+          env:
+            - name: DB_HOST
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-conf
+                  key: host
+            - name: DB_NAME
+              valueFrom:
+                configMapKeyRef:
+                  name: postgres-conf
+                  key: name
+            - name: POSTGRES_USER
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres_user
+            - name: POSTGRES_PASSWORD
+              valueFrom:
+                secretKeyRef:
+                  name: postgres-credentials
+                  key: postgres_password
+      imagePullSecrets:
+        - name: my-dockerhub-secret
