@@ -9,7 +9,7 @@ public interface PaymentService {
 
     ResponseEntity<Object> verifyTransaction(String email);
 
-    ResponseEntity<Object> scanAndPayWithQRCode(String qrCodeData, Double amount, String transactionPin);
+    ResponseEntity<Object> scanAndPayWithQRCode(String qrCodeData, Long qrCodeId, Double amount, String transactionPin);
     ResponseEntity<Object> generateSubQRCodePayment(Long subQRCodeId, Double amount, String transactionPin);
 
 

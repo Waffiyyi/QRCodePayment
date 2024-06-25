@@ -100,8 +100,8 @@ public class PaymentServiceImpl implements PaymentService {
         return new ResponseEntity<>("Transaction was unsuccessful", HttpStatus.EXPECTATION_FAILED);
     }
 @Override
-    public ResponseEntity<Object> scanAndPayWithQRCode(String qrCodeData, Double amount, String transactionPin) {
-        QRCode qrCode = qrCodeRepository.findByQrCodeData(qrCodeData).orElseThrow(() -> new IllegalArgumentException("QR Code not found"));
+    public ResponseEntity<Object> scanAndPayWithQRCode(String qrCodeData, Long qrCodeId, Double amount, String transactionPin) {
+        QRCode qrCode = qrCodeRepository.findByQrCodeDataAndId(qrCodeData, qrCodeId).orElseThrow(() -> new IllegalArgumentException("QR Code not found"));
         if(!qrCode.isEnabled()){
             throw new IllegalArgumentException("QRCode disabled");
         }

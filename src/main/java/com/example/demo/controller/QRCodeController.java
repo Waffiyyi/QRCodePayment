@@ -31,8 +31,8 @@ import java.time.LocalDateTime;
     }
 
     @PostMapping("/scan-pay")
-    public ResponseEntity<?> scanAndPayWithQRCode(@RequestParam String qrCodeData, @RequestParam Double amount, @RequestParam String transactionPin) {
-        return paymentService.scanAndPayWithQRCode(qrCodeData, amount, transactionPin);
+    public ResponseEntity<?> scanAndPayWithQRCode(@RequestParam String qrCodeData, @RequestParam Long qrCodeId, @RequestParam Double amount, @RequestParam String transactionPin) {
+        return paymentService.scanAndPayWithQRCode(qrCodeData,qrCodeId, amount, transactionPin);
     }
 
     @PostMapping("/sub-qr-pay")
