@@ -20,7 +20,7 @@ public class User {
 
 
     private String email;
-
+    private String transactionPin;
 
     @OneToMany(mappedBy = "user")
     private List<QRCode> qrCodes;

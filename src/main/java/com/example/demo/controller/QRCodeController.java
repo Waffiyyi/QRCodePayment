@@ -54,7 +54,7 @@ import java.time.LocalDateTime;
 
     @PostMapping("/set-expiration")
     public ResponseEntity<?> setQRCodeExpiration(@RequestParam Long qrCodeId, @RequestParam LocalDateTime expirationDate) {
-        qrCodeService.setQRCodeExpiration(qrCodeId, expirationDate);
+        qrCodeService.setSubQRCodeExpiration(qrCodeId, expirationDate);
         return ResponseEntity.ok().build();
     }
 }

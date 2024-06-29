@@ -22,8 +22,9 @@ public class QRCodeServiceImpl implements QRCodeService {
     private final UserRepository userRepository;
 @Override
     public byte[] generateBaseQRCode(String qrCodeData) throws IOException {
+    User currentUser; // = your microservice API
     User user = new User();
-    userRepository.save(user);
+    userRepository.save(user); //You can then pass in currentUser here
         QRCode qrCode = new QRCode();
         qrCode.setQrCodeData(qrCodeData);
         qrCode.setUser(user);
@@ -65,10 +66,10 @@ public class QRCodeServiceImpl implements QRCodeService {
         qrCodeRepository.save(qrCode);
     }
 @Override
-    public void setQRCodeExpiration(Long qrCodeId, LocalDateTime expirationDate) {
-        QRCode qrCode = qrCodeRepository.findById(qrCodeId).orElseThrow(() -> new IllegalArgumentException("QR Code not found"));
+    public void setSubQRCodeExpiration(Long subQrCodeId, LocalDateTime expirationDate) {
+        SubQRCode qrCode = subQRCodeRepository.findById(subQrCodeId).orElseThrow(() -> new IllegalArgumentException("QR Code not found"));
         qrCode.setExpirationDate(expirationDate);
-        qrCodeRepository.save(qrCode);
+        subQRCodeRepository.save(qrCode);
     }
 @Override
     public QRCode getQRCode(Long qrCodeId) {

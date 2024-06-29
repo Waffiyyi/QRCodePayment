@@ -22,7 +22,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.reactive.function.client.WebClient;
 import org.springframework.web.servlet.view.RedirectView;
 import java.util.List;
+import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
+
+import static com.example.demo.utils.QRCodeGenerator.extractInfoFromQRCode;
 
 @Service
 @RequiredArgsConstructor
@@ -104,15 +108,16 @@ public class PaymentServiceImpl implements PaymentService {
         if(!qrCode.isEnabled()){
             throw new IllegalArgumentException("QRCode disabled");
         }
-        //Extract necessary info from qrcode
+    Map<String, String> qrCodeInfo = extractInfoFromQRCode(qrCodeData);
 
-        // Here, validate the transaction pin
 
-        // Assuming validation is successful
+    if(!Objects.equals(qrCode.getUser().getTransactionPin(), transactionPin)){
+           throw new IllegalArgumentException("Wrong Pin");
+       }
 
         InitializeTransactionDTO transactionDTO = new InitializeTransactionDTO();
         transactionDTO.setAmount(amount.toString());
-        transactionDTO.setEmail("fasholawafiyyi@gmail.com"); // User's email needed for receipt, hardcoding for now...
+        transactionDTO.setEmail(qrCode.getUser().getEmail()); // User's email needed for receipt, hardcoding for now...
         return initializeTransaction(transactionDTO, qrCode.getId());
     }
 @Override
@@ -121,16 +126,16 @@ public class PaymentServiceImpl implements PaymentService {
     if(!subQRCode.isEnabled()){
         throw new IllegalArgumentException("QRCode disabled");
     }
-        //Extract necessary info from qrcode
+    Map<String, String> qrCodeInfo = extractInfoFromQRCode(subQRCode.getCode());
 
 
-       // Here, validate the transaction pin
-
-       // Assuming validation is successful
+    if(!Objects.equals(subQRCode.getBaseQRCode().getUser().getTransactionPin(), transactionPin)){
+        throw new IllegalArgumentException("Wrong Pin");
+    }
 
         InitializeTransactionDTO transactionDTO = new InitializeTransactionDTO();
         transactionDTO.setAmount(amount.toString());
-        transactionDTO.setEmail("fasholawafiyyi@gmail.com"); //pass in user's email here instead
+     transactionDTO.setEmail(subQRCode.getBaseQRCode().getUser().getEmail()); //pass in user's email here instead
 
         return initializeTransaction(transactionDTO, subQRCode.getBaseQRCode().getId());
     }

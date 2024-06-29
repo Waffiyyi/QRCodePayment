@@ -1,7 +1,6 @@
 package com.example.demo.service;
 
 import com.example.demo.models.QRCode;
-import com.example.demo.models.SubQRCode;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -12,6 +11,6 @@ public interface QRCodeService {
     void enableQRCode(Long qrCodeId);
     void disableQRCode(Long qrCodeId);
 
-    void setQRCodeExpiration(Long qrCodeId, LocalDateTime expirationDate);
+    void setSubQRCodeExpiration(Long subQrCodeId, LocalDateTime expirationDate);
     QRCode getQRCode(Long qrCodeId);
 }
