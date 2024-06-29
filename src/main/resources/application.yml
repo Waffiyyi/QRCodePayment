@@ -17,7 +17,7 @@ server:
 
 paystack:
   secret:
-    key: Bearer sk_test_f02aa8e41cbc04439974e97960dcc33f7b9f476d
+    key: Bearer sk_test_e6e5c33035a78bc0c1c743c9d26588b346fc085b
 #  payment:
 #    channels: card, bank, ussd, qr, mobile_money, bank_transfer, eft
   base:

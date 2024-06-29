@@ -60,7 +60,6 @@ public class PaymentServiceImpl implements PaymentService {
         transactionDTO.setCurrency("NGN");
         transactionDTO.setReference(reference);
         transactionDTO.setChannels(List.of("card", "bank_transfer", "ussd"));
-
         InitializeTransactionResponse initiateTransaction = webClient
                 .post()
                 .uri("/transaction/initialize")
