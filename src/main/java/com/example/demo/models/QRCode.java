@@ -1,11 +1,12 @@
 package com.example.demo.models;
 
+
 import jakarta.persistence.*;
 import lombok.Data;
 
-import java.time.LocalDateTime;
-import java.util.List;
 
+import java.time.LocalDateTime;
+import java.util.*;
 @Entity
 @Data
 public class QRCode {
